@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Kenangan Coffee"
+description = "A welcoming website for Kenangan Coffee in Connaught Place, New Delhi, helping guests explore cafe highlights, find the shop, and call or order."
+version = "1.0.0"
+id = "artifacts/kenangan-coffee"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 26068
+
+[services.development]
+run = "pnpm --filter @workspace/kenangan-coffee run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/kenangan-coffee", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/kenangan-coffee/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "26068"
+BASE_PATH = "/"
